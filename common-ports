@@ -1,0 +1,45 @@
+echo 7
+discard 9
+systat 11
+netstat 15
+ftpdata 20
+ftp 21
+ssh 22
+telnet 23
+smtp 25, 587, 2525
+time 37
+rlp 39
+dns 53
+tftp 69
+www-http/secure http 80
+kerberos 88
+rpc bind 111 / nfs
+nntp 119
+ntp 123
+rpc 135
+netbios nameserver 137
+netbios d138
+netbios smb 139
+imap 143
+snmp 161
+snmp trap 162
+BGP 179
+irc 194
+ldap 389 secure ldap 636
+https 443
+smb 445
+ike 500
+shell/syslog 514
+mssql 1433
+nfs 2049 / rpc
+mysql 3306
+Global Catalog Service 3268
+windows rdp 3389
+sip 5060,5061,2000,2001
+llmnr (link local multicast name resolution) 5355
+ADB 5555 to 5585
+Windows Management Instrumentation
+WMI remote services such as the Distributed Component Object Model (DCOM) 135
+Windows Remote Management (WinRM/HTTP) 5985
+WinRM/HTTPS 5986
+DNP3 20000 PGNO 3022
