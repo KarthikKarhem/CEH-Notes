@@ -38,6 +38,7 @@ windows rdp 3389
 sip 5060,5061,2000,2001
 llmnr (link local multicast name resolution) 5355
 ADB 5555 to 5585
+RAT 6703, 9871
 Windows Management Instrumentation
 WMI remote services such as the Distributed Component Object Model (DCOM) 135
 Windows Remote Management (WinRM/HTTP) 5985
